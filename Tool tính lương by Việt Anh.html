@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚡ TOOL BY VANH ⚡</title>
+    <style>
+        :root {
+            --bg-color: #0a0f0d;
+            --card-bg: #111a16;
+            --primary-glow: #00ff66;
+            --text-color: #adbebc;
+            --input-bg: #1a2621;
+            --danger-color: #ff3333;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            background-image: radial-gradient(circle, #112519 10%, #0a0f0d 90%);
+            min-height: 100vh;
+        }
+
+        /* Bố cục chính */
+        .main-layout {
+            display: flex;
+            max-width: 1250px;
+            width: 100%;
+            gap: 20px;
+        }
+
+        .wrapper {
+            background: var(--card-bg);
+            flex: 2;
+            padding: 30px;
+            border-radius: 8px;
+            border: 1px solid var(--primary-glow);
+            box-shadow: 0 0 20px rgba(0, 255, 102, 0.2);
+        }
+
+        /* --- MÁY TÍNH BÊN CẠNH --- */
+        .calc-wrapper {
+            background: var(--card-bg);
+            flex: 1;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #00ccff;
+            box-shadow: 0 0 20px rgba(0, 204, 255, 0.2);
+            height: fit-content;
+        }
+
+        /* --- BANNER HACKER STYLE --- */
+        .hacker-banner {
+            text-align: center;
+            padding: 15px;
+            border: 2px dashed var(--primary-glow);
+            background: #000;
+            margin-bottom: 25px;
+        }
+
+        .hacker-banner h1 {
+            color: #000;
+            background: var(--primary-glow);
+            display: inline-block;
+            padding: 5px 20px;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(0,255,102,0.5);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        .hacker-subtext {
+            color: var(--primary-glow);
+            font-size: 12px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .section-title {
+            grid-column: 1 / -1;
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--primary-glow);
+            margin-top: 15px;
+            border-left: 3px solid var(--primary-glow);
+            padding-left: 8px;
+            text-transform: uppercase;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-size: 12px;
+            margin-bottom: 6px;
+            color: #8da3a0;
+        }
+
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            background-color: var(--input-bg);
+            border: 1px solid #2d4a3e;
+            border-radius: 4px;
+            font-size: 16px; 
+            color: var(--primary-glow);
+            outline: none;
+            width: 100%;
+        }
+
+        input:focus {
+            border-color: var(--primary-glow) !important;
+            box-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+        }
+
+        .readonly-value {
+            padding: 10px;
+            background: #0d1612;
+            border: 1px solid #1f382c;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #00ff66;
+        }
+
+        /* --- NÚT BẤM TÍNH LƯƠNG --- */
+        .btn-submit {
+            grid-column: 1 / -1;
+            padding: 15px;
+            margin-top: 15px;
+            background-color: var(--primary-glow);
+            color: #000;
+            font-weight: bold;
+            font-size: 18px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0,255,102,0.4);
+            transition: 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn-submit:hover, .btn-submit:active {
+            background-color: #00cc52;
+            box-shadow: 0 0 25px rgba(0,255,102,0.8);
+            transform: scale(0.98);
+        }
+
+        /* --- BẢNG KẾT QUẢ --- */
+        .result-section {
+            margin-top: 25px;
+            border-top: 1px dashed var(--primary-glow);
+            padding-top: 15px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            min-width: 300px; 
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #1a2e25;
+            font-size: 13px;
+        }
+
+        th {
+            background-color: #0d1612;
+            color: var(--primary-glow);
+            border-bottom: 2px solid var(--primary-glow);
+        }
+
+        .text-right { text-align: right; }
+        .font-bold { font-weight: bold; }
+
+        .row-total {
+            background-color: #122c1e;
+            color: var(--primary-glow);
+            font-size: 15px;
+            text-shadow: 0 0 5px rgba(0,255,102,0.5);
+        }
+
+        .row-thucte {
+            background-color: #241414;
+            color: #ff9999;
+            font-size: 16px;
+            border: 1px solid var(--danger-color);
+        }
+
+        /* --- UI GIAO DIỆN MÁY TÍNH --- */
+        .calc-screen {
+            width: 100%;
+            height: 60px;
+            background: #000;
+            border: 1px solid #00ccff;
+            color: #00ccff;
+            text-align: right;
+            padding: 15px;
+            font-size: 22px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            outline: none;
+            box-shadow: inset 0 0 10px rgba(0, 204, 255, 0.3);
+        }
+
+        .calc-buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .calc-btn {
+            padding: 15px;
+            background: #0d1b2a;
+            border: 1px solid #1e3d59;
+            color: #00ccff;
+            font-size: 18px; 
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: 0.2s;
+            touch-action: manipulation; 
+        }
+
+        .calc-btn:hover, .calc-btn:active {
+            background: #00ccff;
+            color: #000;
+            box-shadow: 0 0 10px #00ccff;
+        }
+
+        .calc-btn.operator {
+            color: #ff9900;
+            border-color: #ff9900;
+        }
+        .calc-btn.operator:hover, .calc-btn.operator:active {
+            background: #ff9900;
+            color: #000;
+            box-shadow: 0 0 10px #ff9900;
+        }
+
+        .calc-btn.clear {
+            color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        .calc-btn.clear:hover, .calc-btn.clear:active {
+            background: var(--danger-color);
+            color: #000;
+            box-shadow: 0 0 10px var(--danger-color);
+        }
+
+        /* =========================================
+           ĐÁP ỨNG CHO MOBILE (MEDIA QUERIES)
+           ========================================= */
+        @media (max-width: 1000px) {
+            .main-layout { flex-direction: column; }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .wrapper {
+                padding: 15px;
+            }
+            .calc-wrapper {
+                padding: 15px;
+            }
+            .hacker-banner h1 {
+                font-size: 18px; 
+                padding: 5px 10px;
+                letter-spacing: 1px;
+            }
+            .hacker-subtext {
+                font-size: 10px;
+            }
+            .grid-container {
+                grid-template-columns: 1fr; 
+                gap: 12px;
+            }
+            .calc-btn {
+                padding: 18px 10px; 
+            }
+            th, td {
+                padding: 8px 5px; 
+                font-size: 12px;
+            }
+            .row-total {
+                font-size: 13px;
+            }
+            .row-thucte {
+                font-size: 14px;
+            }
+            .btn-submit {
+                font-size: 16px;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-layout">
+    
+    <div class="wrapper">
+        <div class="hacker-banner">
+            <h1>SYSTEM_ACCESS: TOOL BY VANH</h1>
+            <div class="hacker-subtext">// CODENAME: SALARY_CALCULATOR_V3.6_MANUAL //</div>
+        </div>
+        
+        <div class="grid-container">
+            <div class="section-title">>_ THÔNG TIN LƯƠNG CƠ SỞ</div>
+            <div class="form-group">
+                <label>Lương cơ bản (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="luongCoBan" value="6,000,000" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Lương chuyên môn (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="luongChuyenMon" value="0" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Thâm niên (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="thamNien" value="0" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Lương 1 giờ gốc:</label>
+                <div class="readonly-value" id="resLuongMotGio" style="color: #00ccff; border-color: #00ccff;">0 VNĐ</div>
+            </div>
+
+            <div class="section-title">>_ QUẢN LÝ PHU CẤP (TỰ DO THAY ĐỔI)</div>
+            <div class="form-group">
+                <label>Tiền ăn (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="tienAn" value="1,000,000" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Phụ cấp không kim loại (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="pcKhongKimLoai" value="200,000" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Chuyên cần (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="chuyenCan" value="400,000" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Nhà ở (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="nhaO" value="500,000" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Đi lại (VNĐ):</label>
+                <input type="text" inputmode="numeric" id="diLai" value="300,000" oninput="dinhDangKhiNhap(this)">
+            </div>
+            <div class="form-group">
+                <label>Tổng tiền phụ cấp tháng này:</label>
+                <div class="readonly-value" id="lblTongPhuCapHienTai" style="color: #ff9900; border-color: #ff9900;">0 VNĐ</div>
+            </div>
+
+            <div class="section-title">>_ KHAI BÁO BIẾN SỐ (GIỜ LÀM VIỆC)</div>
+            <div class="form-group">
+                <label>Tăng ca ngày thường (x1.5):</label>
+                <input type="number" inputmode="decimal" id="gioTcaNgay" value="0" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Tăng ca đêm thường (x2.1):</label>
+                <input type="number" inputmode="decimal" id="gioTcaDem" value="0" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Tăng ca Chủ Nhật ngày (x2.0):</label>
+                <input type="number" inputmode="decimal" id="gioCnNgay" value="0" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Tăng ca Chủ Nhật đêm (x2.7):</label>
+                <input type="number" inputmode="decimal" id="gioCnDem" value="0" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Số giờ làm đêm (Phụ cấp x0.3):</label>
+                <input type="number" inputmode="decimal" id="gioLamDem" value="0" step="0.5">
+            </div>
+            <div class="form-group">
+                <label>Số buổi làm Chủ Nhật (+150k):</label>
+                <input type="number" inputmode="numeric" id="soBuoiCn" value="0" step="1">
+            </div>
+            
+            <button class="btn-submit" onclick="tinhToanBoLuong()">🚀 TÍNH LƯƠNG</button>
+        </div>
+
+        <div class="result-section">
+            <div class="section-title" style="border-left-color: #00ff66;">>_ TRÍCH XUẤT DỮ LIỆU LƯƠNG TỔNG KẾT</div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>DANH MỤC</th>
+                            <th class="text-right">GIÁ TRỊ THÀNH PHẨM</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Lương Gốc (Cơ bản + Chuyên môn + Thâm niên)</td>
+                            <td class="text-right" id="lblLuongCoSo">0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Tổng các khoản phụ cấp (Đã tính trừ ngày nghỉ)</td>
+                            <td class="text-right" id="lblPhuCapKetQua">0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Tiền tăng ca ngày thường (Ngày + Đêm)</td>
+                            <td class="text-right" id="lblTienTcaThuong">0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Tiền tăng ca Chủ Nhật (Ngày + Đêm)</td>
+                            <td class="text-right" id="lblTienTcaCN">0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>Phụ cấp ca đêm (0.3) + Phụ cấp ngày CN</td>
+                            <td class="text-right" id="lblTongPhuCapThem">0 VNĐ</td>
+                        </tr>
+                        <tr class="font-bold row-total">
+                            <td>[+] TỔNG THU NHẬP (GROSS)</td>
+                            <td class="text-right" id="lblTongLuong">0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>[-] Khấu trừ Bảo hiểm (10.5%)</td>
+                            <td class="text-right" id="lblBaoHiem" style="color: var(--danger-color);">-0 VNĐ</td>
+                        </tr>
+                        <tr>
+                            <td>[-] Đoàn phí Công đoàn</td>
+                            <td class="text-right" style="color: var(--danger-color);">-30,000 VNĐ</td>
+                        </tr>
+                        <tr class="font-bold row-thucte">
+                            <td>[=] THỰC NHẬN VỀ TÀI KHOẢN (NET)</td>
+                            <td class="text-right" id="lblThucNhan">0 VNĐ</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="calc-wrapper">
+        <div class="section-title" style="border-left-color: #00ccff; margin-bottom: 15px; margin-top: 0;">>_ CO-PROCESSOR (MÁY TÍNH)</div>
+        <input type="text" class="calc-screen" id="calcScreen" readonly value="0">
+        <div class="calc-buttons">
+            <button class="calc-btn clear" onclick="clearCalc()">C</button>
+            <button class="calc-btn operator" onclick="pressCalc('/')">/</button>
+            <button class="calc-btn operator" onclick="pressCalc('*')">*</button>
+            <button class="calc-btn operator" onclick="pressCalc('-')">-</button>
+            
+            <button class="calc-btn" onclick="pressCalc('7')">7</button>
+            <button class="calc-btn" onclick="pressCalc('8')">8</button>
+            <button class="calc-btn" onclick="pressCalc('9')">9</button>
+            <button class="calc-btn operator" onclick="pressCalc('+')">+</button>
+            
+            <button class="calc-btn" onclick="pressCalc('4')">4</button>
+            <button class="calc-btn" onclick="pressCalc('5')">5</button>
+            <button class="calc-btn" onclick="pressCalc('6')">6</button>
+            <button class="calc-btn operator" onclick="calculateSqrt()">√</button>
+            
+            <button class="calc-btn" onclick="pressCalc('1')">1</button>
+            <button class="calc-btn" onclick="pressCalc('2')">2</button>
+            <button class="calc-btn" onclick="pressCalc('3')">3</button>
+            <button class="calc-btn operator" style="grid-row: span 2; height: 100%;" onclick="executeCalc()">=</button>
+            
+            <button class="calc-btn" style="grid-column: span 2;" onclick="pressCalc('0')">0</button>
+            <button class="calc-btn" onclick="pressCalc('.')">.</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- CHỨC NĂNG ĐỊNH DẠNG DẤU PHẨY KHI GÕ (Không tự tính lương nữa) ---
+    function dinhDangKhiNhap(input) {
+        let value = input.value.replace(/[^0-9]/g, "");
+        if (value !== "") {
+            input.value = new Intl.NumberFormat('en-US').format(parseInt(value, 10));
+        } else {
+            input.value = "0";
+        }
+        // Đã xóa lệnh gọi tinhToanBoLuong() ở đây để màn hình không nhảy số nữa
+    }
+
+    // Hàm chuyển đổi chuỗi có dấu phẩy thành số thực
+    function layGiaTriSo(id) {
+        let valStr = document.getElementById(id).value || "0";
+        return parseFloat(valStr.replace(/,/g, "")) || 0;
+    }
+
+    // --- LOGIC MÁY TÍNH (CALCULATOR) ---
+    let calcExpression = "";
+    const manHinhCalc = document.getElementById("calcScreen");
+
+    function pressCalc(val) {
+        if (manHinhCalc.value === "0" && !isNaN(val)) {
+            calcExpression = val;
+        } else {
+            calcExpression += val;
+        }
+        manHinhCalc.value = calcExpression;
+    }
+
+    function clearCalc() {
+        calcExpression = "";
+        manHinhCalc.value = "0";
+    }
+
+    function executeCalc() {
+        try {
+            if (calcExpression === "") return;
+            let result = new Function('return ' + calcExpression)();
+            manHinhCalc.value = Number(result.toFixed(4));
+            calcExpression = manHinhCalc.value;
+        } catch (error) {
+            manHinhCalc.value = "ERROR";
+            calcExpression = "";
+        }
+    }
+
+    function calculateSqrt() {
+        try {
+            let currentVal = parseFloat(manHinhCalc.value) || 0;
+            if (currentVal < 0) {
+                manHinhCalc.value = "ERROR";
+            } else {
+                manHinhCalc.value = Math.sqrt(currentVal);
+            }
+            calcExpression = manHinhCalc.value;
+        } catch (e) {
+            manHinhCalc.value = "ERROR";
+        }
+    }
+
+    // --- LOGIC TÍNH LƯƠNG CHÍNH ---
+    function dinhDangTien(so) {
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(so).replace('₫', 'VNĐ');
+    }
+
+    function tinhToanBoLuong() {
+        const luongCoBan = layGiaTriSo('luongCoBan');
+        const luongChuyenMon = layGiaTriSo('luongChuyenMon');
+        const thamNien = layGiaTriSo('thamNien');
+        
+        const tienAn = layGiaTriSo('tienAn');
+        const pcKhongKimLoai = layGiaTriSo('pcKhongKimLoai');
+        const chuyenCan = layGiaTriSo('chuyenCan');
+        const nhaO = layGiaTriSo('nhaO');
+        const diLai = layGiaTriSo('diLai');
+        
+        const tongPhuCapThucTe = tienAn + pcKhongKimLoai + chuyenCan + nhaO + diLai;
+        document.getElementById('lblTongPhuCapHienTai').innerText = dinhDangTien(tongPhuCapThucTe);
+
+        const gioTcaNgay = parseFloat(document.getElementById('gioTcaNgay').value) || 0;
+        const gioTcaDem = parseFloat(document.getElementById('gioTcaDem').value) || 0;
+        const gioCnNgay = parseFloat(document.getElementById('gioCnNgay').value) || 0;
+        const gioCnDem = parseFloat(document.getElementById('gioCnDem').value) || 0;
+        const gioLamDem = parseFloat(document.getElementById('gioLamDem').value) || 0;
+        const soBuoiCn = parseInt(document.getElementById('soBuoiCn').value) || 0;
+
+        const congDoan = 30000;
+
+        // 1. Tính Lương 1h
+        const tongLuongGoc = luongCoBan + luongChuyenMon + thamNien;
+        const luongMotGio = tongLuongGoc / 26 / 8;
+        document.getElementById('resLuongMotGio').innerText = dinhDangTien(Math.round(luongMotGio));
+
+        // 2. Tính tăng ca
+        const tienTcaNgay = gioTcaNgay * luongMotGio * 1.5;
+        const tienTcaDem = gioTcaDem * luongMotGio * 2.1;
+        const tienCnNgay = gioCnNgay * luongMotGio * 2;
+        const tienCnDem = gioCnDem * luongMotGio * 2.7;
+
+        // 3. Phụ cấp thêm
+        const phuCapDem = gioLamDem * luongMotGio * 0.3;
+        const phuCapLamCn = soBuoiCn * 150000;
+
+        // 4. Tổng lương
+        const tongLuong = tongLuongGoc + tongPhuCapThucTe + 
+                          tienTcaNgay + tienTcaDem + 
+                          tienCnNgay + tienCnDem + 
+                          phuCapDem + phuCapLamCn;
+
+        // 5. Khấu trừ
+        const baoHiem = tongLuongGoc * 0.105;
+        const thucNhan = tongLuong - baoHiem - congDoan;
+
+        // Xuất màn hình bảng tổng kết
+        document.getElementById('lblLuongCoSo').innerText = dinhDangTien(tongLuongGoc);
+        document.getElementById('lblPhuCapKetQua').innerText = dinhDangTien(tongPhuCapThucTe);
+        document.getElementById('lblTienTcaThuong').innerText = dinhDangTien(Math.round(tienTcaNgay + tienTcaDem));
+        document.getElementById('lblTienTcaCN').innerText = dinhDangTien(Math.round(tienCnNgay + tienCnDem));
+        document.getElementById('lblTongPhuCapThem').innerText = dinhDangTien(Math.round(phuCapDem + phuCapLamCn));
+        
+        document.getElementById('lblTongLuong').innerText = dinhDangTien(Math.round(tongLuong));
+        document.getElementById('lblBaoHiem').innerText = "-" + dinhDangTien(Math.round(baoHiem));
+        document.getElementById('lblThucNhan').innerText = dinhDangTien(Math.round(thucNhan));
+    }
+
+    // Chạy một lần lúc mới mở trang để reset bảng giá trị mặc định
+    document.addEventListener("DOMContentLoaded", tinhToanBoLuong);
+    setTimeout(tinhToanBoLuong, 100); 
+</script>
+
+</body>
+</html>
